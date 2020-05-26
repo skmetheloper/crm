@@ -1,0 +1,14 @@
+RewriteEngine On
+
+Options -Indexes +FollowSymLinks +MultiViews
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-l
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteRule ^ view/index.php [L,QSA]
+
+
+<Files "*.sqlite">
+    Require all denied
+</Files>
