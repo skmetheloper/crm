@@ -25,3 +25,11 @@ Create `database.sqlite` file in root directory to use `SQLite3` database connec
                      #log   #query_string
  $  php migrate.php  true   "SELECT * FROM user WHERE user_id=30"
 ```
+
+### Run on Development Server
+
+```sh
+ $  php -S localhost:8000 -t view
+```
+
+
