@@ -1,2 +1,4 @@
 jtest.js
 *.sqlite
+db.cached.json
+tables.sqlite

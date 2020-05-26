@@ -17,16 +17,44 @@ class Database
   public function __construct()
   {
     $this->database_path = dirname(__DIR__) . '/database.sqlite';
-    if (file_exists($this->database_path)) {
-      $this->conn = new SQLite3($this->database_path);
-      $this->conn->enableExceptions(true);
+
+    file_exists($this->database_path)
+      ? $this->connectSQLite()
+      : $this->connectMySQL();
+  }
+
+  protected function connectSQLite()
+  {
+    $this->conn = new SQLite3($this->database_path);
+    $this->conn->enableExceptions(true);
+  }
+
+  protected function connectMySQL()
+  {
+    unset($this->database_path);
+
+    $this->conn = new PDO('mysql:host=' . $this->host . ';dbname=' . $this->db_name, $this->username, $this->password);
+
+    if ($this->conn) {
+      throw new PDOException('Could not connect to database');
     }
-    try {
-      $this->conn = new PDO('mysql:host=' . $this->host . ';dbname=' . $this->db_name, $this->username, $this->password);
-      $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    } catch (PDOException $e) {
-      die($e->getMessage());
-    }
+
+    $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  }
+
+  public function execute(string $sql)
+  {
+    return $this->conn->exec($sql);
+  }
+
+  public function prepare(string $sql)
+  {
+    return $this->conn->prepare($sql);
+  }
+
+  public function query(string $sql)
+  {
+    return $this->conn->query($sql);
   }
 
   /**
@@ -37,8 +65,12 @@ class Database
     return $this->conn;
   }
 
-  public function conn()
+  public function reset()
   {
-    return $this->getConnection();
+    if (!$this->database_path) {
+      return;
+    }
+    file_put_contents($this->database_path, '');
+    $this->connectSQLite();
   }
 }
