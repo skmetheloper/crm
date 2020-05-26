@@ -1,12 +1,21 @@
 <?php
-
 define('REQUEST_TIME', microtime(true));
+
+define('OUTPUT_LOG', true);
+define('OUTPUT_FILE', 'db.cache.json');
 
 require __DIR__ . '/config/Database.php';
 
 $db = new Database;
 
-$db->execute('CREATE TABLE IF NOT EXISTS `custom_product_field` (
+unset($argv[0]);
+$sql = $argc > 1 ? join(' ', $argv) : null;
+if (empty($sql)) {
+    /* ------------------------------------------------- 
+ *    Migrating to Database
+ * -------------------------------------------------
+ */
+    $db->execute('CREATE TABLE IF NOT EXISTS `custom_product_field` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `field_type` int(11) NOT NULL,
@@ -16,23 +25,23 @@ $db->execute('CREATE TABLE IF NOT EXISTS `custom_product_field` (
   `active_flag` int(1) NOT NULL
 );');
 
-$db->execute('CREATE TABLE IF NOT EXISTS `email_details` (
+    $db->execute('CREATE TABLE IF NOT EXISTS `email_details` (
     `email_details_id` int(11) NOT NULL,
     `email` varchar(255) NOT NULL,
     `email_type_id` int(11) NOT NULL
 );');
 
-$db->execute('CREATE TABLE IF NOT EXISTS `email_type` (
+    $db->execute('CREATE TABLE IF NOT EXISTS `email_type` (
     `email_type_id` int(11) NOT NULL,
     `email_type_description` varchar(255) NOT NULL
 );');
 
-$db->execute('CREATE TABLE IF NOT EXISTS `label` (
+    $db->execute('CREATE TABLE IF NOT EXISTS `label` (
     `label_id` int(11) NOT NULL,
     `label_name` varchar(255) NOT NULL
 );');
 
-$db->execute('CREATE TABLE IF NOT EXISTS `organization` (
+    $db->execute('CREATE TABLE IF NOT EXISTS `organization` (
     `organization_id` int(11) NOT NULL,
     `organization_name` varchar(255) NOT NULL,
     `address` varchar(255) NOT NULL,
@@ -53,13 +62,13 @@ $db->execute('CREATE TABLE IF NOT EXISTS `organization` (
     `profile_picture` blob NOT NULL
 );');
 
-$db->execute('CREATE TABLE IF NOT EXISTS `owner_visibility_group` (
+    $db->execute('CREATE TABLE IF NOT EXISTS `owner_visibility_group` (
     `id` int(11) NOT NULL,
     `owner_visibility_name` varchar(255) NOT NULL,
     `description` varchar(255) NOT NULL
 );');
 
-$db->execute('CREATE TABLE IF NOT EXISTS `people` (
+    $db->execute('CREATE TABLE IF NOT EXISTS `people` (
     `people_id` int(11) NOT NULL,
     `organization_id` int(11) NOT NULL,
     `label_id` int(11) NOT NULL,
@@ -83,29 +92,29 @@ $db->execute('CREATE TABLE IF NOT EXISTS `people` (
     `won_deals` int(11) NOT NULL
 );');
 
-$db->execute('CREATE TABLE IF NOT EXISTS `permission_activity` (
+    $db->execute('CREATE TABLE IF NOT EXISTS `permission_activity` (
     `permission_activity_id` int(11) NOT NULL,
     `permission_activity_name` varchar(255) NOT NULL
 );');
 
-$db->execute('CREATE TABLE IF NOT EXISTS `permission_set` (
+    $db->execute('CREATE TABLE IF NOT EXISTS `permission_set` (
     `permission_set_id` int(11) NOT NULL,
     `permission_set_name` varchar(255) NOT NULL,
     `permission_activity_id` int(11) NOT NULL
 );');
 
-$db->execute('CREATE TABLE IF NOT EXISTS `phone_details` (
+    $db->execute('CREATE TABLE IF NOT EXISTS `phone_details` (
     `ph_details_id` int(11) NOT NULL,
     `number` int(11) NOT NULL,
     `phone_type` int(11) NOT NULL
 );');
 
-$db->execute('CREATE TABLE IF NOT EXISTS `phone_type` (
+    $db->execute('CREATE TABLE IF NOT EXISTS `phone_type` (
     `phone_type_id` int(11) NOT NULL,
     `phone_type_description` varchar(255) NOT NULL
 );');
 
-$db->execute('CREATE TABLE IF NOT EXISTS `product` (
+    $db->execute('CREATE TABLE IF NOT EXISTS `product` (
     `id` int(11) NOT NULL,
     `product_name` varchar(255) NOT NULL,
     `product_code` varchar(255) NOT NULL,
@@ -121,7 +130,7 @@ $db->execute('CREATE TABLE IF NOT EXISTS `product` (
     `tax` int(11) NOT NULL
 );');
 
-$db->execute('CREATE TABLE IF NOT EXISTS `team` (
+    $db->execute('CREATE TABLE IF NOT EXISTS `team` (
     `team_id` int(11) NOT NULL,
     `team_name` varchar(255) NOT NULL,
     `team_manager` int(11) NOT NULL,
@@ -129,7 +138,7 @@ $db->execute('CREATE TABLE IF NOT EXISTS `team` (
     `team_members` varchar(255) NOT NULL
 );');
 
-$db->execute('CREATE TABLE IF NOT EXISTS `user` (
+    $db->execute('CREATE TABLE IF NOT EXISTS `user` (
     `user_id` int(11) NOT NULL,
     `email` varchar(255) NOT NULL,
     `first_name` varchar(255) NOT NULL,
@@ -140,38 +149,33 @@ $db->execute('CREATE TABLE IF NOT EXISTS `user` (
     `last_login` datetime NOT NULL
 );');
 
-$db->execute('CREATE TABLE IF NOT EXISTS `visibility_group` (
+    $db->execute('CREATE TABLE IF NOT EXISTS `visibility_group` (
     `visibility_group_id` int(11) NOT NULL,
     `visibility_group_name` varchar(255) NOT NULL,
     `parent_group` int(11) NOT NULL
 );');
 
-file_exists('tables.sqlite') or die('`tables.sqlite` file is required');
-
-return $db->execute(file_get_contents('tables.sqlite'));
-
-$table = $argv[1] ?? null;
-
-if ($table === null) return;
-
-$stmt = $db->query("SELECT * FROM `{$table}`");
-
-$results = [];
-$results[] = $result = $stmt->fetchArray(SQLITE3_ASSOC);
-
-while ($result) {
-    $results[] = $result = $stmt->fetchArray(SQLITE3_ASSOC);
+    return file_exists('defaults.sql') && $db->execute(file_get_contents('defaults.sql'));
+} else {
+    /* ------------------------------------------------- 
+ *    Query From Database
+ * -------------------------------------------------
+ */
+    try {
+        $sql = "SELECT * FROM {$sql}";
+        $stmt = $db->query($sql);
+        $results = [];
+        $results[] = $result = $stmt->fetchArray(SQLITE3_ASSOC);
+        while ($result) {
+            $results[] = $result = $stmt->fetchArray(SQLITE3_ASSOC);
+        }
+        unset($result);
+        array_pop($results);
+        $results = json_encode($results, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        OUTPUT_FILE && file_put_contents(OUTPUT_FILE, $results);
+    } catch (Throwable $e) {
+        echo "\033[0;36m [SQL] > ", $sql, PHP_EOL, "\033[1;31m", $e->getMessage(), "\033[0m", PHP_EOL;
+    }
+    error_log('Load Time: ' . round((microtime(true) - REQUEST_TIME) * 1000, 2) . 'ms', 4);
+    OUTPUT_LOG && print $results ?? null;
 }
-
-unset($result);
-array_pop($results);
-// $results = array_unique($results);
-
-$results = json_encode($results, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-
-file_put_contents('db.cached.json', $results);
-
-$ms = round((microtime(true) - REQUEST_TIME) * 1000, 2);
-
-error_log('Load Time: ' . $ms . 'ms', 4);
-echo $results, "\v";
