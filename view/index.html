@@ -11,10 +11,7 @@
         <script src="./dist/semantic.js" defer></script>
             src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     </head>
-    <script>
-$('.ui.basic.button')
-    .ui.modal('show');
-</script>
+   
 
     <body>
         <div class="ui attached stackable menu">
@@ -40,27 +37,30 @@ $('.ui.basic.button')
             data-target="#myModal">Product</button>
 
         <!-- Modal -->
-        <div class="modal fade" id="myModal" role="dialog">
-            <div class="modal-dialog">
-
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close"
-                            data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Modal Header</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>Some text in the modal.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default"
-                            data-dismiss="modal">Close</button>
-                    </div>
+        <div class="ui basic modal">
+            <div class="ui icon header">
+                <i class="archive icon"></i>
+                Archive Old Messages
+           </div>
+            <div class="content">
+                <p>Your inbox is getting full, would you like us to enable automatic archiving of old messages?</p>
+            </div>
+            <div class="actions">
+                <div class="ui red basic cancel inverted button">
+                <i class="remove icon"></i>
+                No
                 </div>
-
+                <div class="ui green ok inverted button">
+                <i class="checkmark icon"></i>
+                Yes
+                </div>
             </div>
         </div>
+    </div>
+        <button class="ui basic button" onclick="$('.ui.basic.modal').modal('show')">Show Modal</button>
+        <script>
+                
+        </script>
     </body>
 
 
