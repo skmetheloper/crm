@@ -1,0 +1,21 @@
+name: PHP Composer
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Create SQLite Database File
+      run: touch database.sqlite
+    
+    - name: Migrate Database
+      run: php test_db.php && echo "Database Migration is success"
