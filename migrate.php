@@ -1,20 +1,21 @@
 <?php
 define('REQUEST_TIME', microtime(true));
 
-define('OUTPUT_LOG', true);
+define('OUTPUT_LOG', $argv[1] ?? false);
 define('OUTPUT_FILE', 'db.cache.json');
 
 require __DIR__ . '/config/Database.php';
 
 $db = new Database;
 
-unset($argv[0]);
+unset($argv[0], $argv[1]);
 $sql = $argc > 1 ? join(' ', $argv) : null;
+
 if (empty($sql)) {
     /* ------------------------------------------------- 
- *    Migrating to Database
- * -------------------------------------------------
- */
+     *    Migrating to Database
+     * -------------------------------------------------
+     */
     $db->execute('CREATE TABLE IF NOT EXISTS `custom_product_field` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,

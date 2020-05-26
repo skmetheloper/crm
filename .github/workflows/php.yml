@@ -14,8 +14,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Create SQLite Database File
+    - name: Create SQLite File
       run: touch database.sqlite
     
     - name: Migrate Database
-      run: php test_db.php && echo "Database Migration is success"
+      run: php migrate.php
+
+    - name: Generate Fake Users
+      run: php seed.php 1000
