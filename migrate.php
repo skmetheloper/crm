@@ -163,7 +163,6 @@ if (empty($sql)) {
  * -------------------------------------------------
  */
     try {
-        $sql = "SELECT * FROM {$sql}";
         $stmt = $db->query($sql);
         $results = [];
         $results[] = $result = $stmt->fetchArray(SQLITE3_ASSOC);

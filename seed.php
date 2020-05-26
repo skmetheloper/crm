@@ -49,12 +49,12 @@ function generateUser(int $i = 0)
         'active' => rand(1, 9) % 3 ? 1 : 0,
         'permit' => 0,
     ];
-    $data['email'] = strtolower("{$data['fname']}{$data['lname']}") . "@{$data['domain'][0]}.{$data['domain'][1]}";
     extract($data);
+    $email = strtolower("{$data['fname']}{$data['lname']}") . "@{$data['domain'][0]}.{$data['domain'][1]}";
 
     return <<<SQL
 INSERT INTO `user` (`user_id`, `email`, `first_name`, `last_name`, `visibility_group`, `active_flag`, `permission_set`, `last_login`) VALUES 
-('$id', '$email', '$fname', '$lname', '$visib', '$active', '$permit', '01-01-2020T12:00Z')
+($id, '$email', '$fname', '$lname', '$visib', '$active', '$permit', '01-01-2020T12:00Z')
 SQL;
 }
 
@@ -67,7 +67,7 @@ try {
         $db->execute(generateUser($i));
     endfor;
 } catch (Throwable $e) {
-    echo "\033[0;36m [SQL] > ", $sql, PHP_EOL, "\033[1;31m", $e->getMessage(), "\033[0m", PHP_EOL;
+    echo "\033[1;31m", $e->getMessage(), "\033[0m", PHP_EOL;
 }
 
 error_log('Load Time: ' . round((microtime(true) - REQUEST_TIME) * 1000, 2) . 'ms', 4);

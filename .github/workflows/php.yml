@@ -22,3 +22,6 @@ jobs:
 
     - name: Generate Fake Users
       run: php seed.php 1000
+
+    - name: Testing Query User
+      run: php migrate.php true "SELECT * FROM user" && cat db.cache.json
