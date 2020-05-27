@@ -22,9 +22,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Create SQLITE File
-      run: touch database/database.sqlite
-
     - name: Installation
       run: composer validate && composer install --quiet --no-dev
 
