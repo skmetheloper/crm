@@ -23,3 +23,6 @@ jobs:
 
     - name: Migration & Seeding
       run: php artisan migrate && php artisan db:seed
+  
+    - name: Fake Users Factory
+      run: php -r 'require("vendor/autoload.php");factory(App\User::class, 1000)->create();exit(1);';
