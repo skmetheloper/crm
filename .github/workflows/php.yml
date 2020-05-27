@@ -14,14 +14,20 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Create SQLite File
-      run: touch database.sqlite
+    - name: Installation
+      run: composer validate && composer install --no-dev
+      
+    - name: Envrionment
+      run: composer run-script post-root-package-install
+      
+    - name: Change Database Driver
+      run: php -r "$ct=array_map(function ($line){ if (preg_match('/DB_CONNECTION=/', $line)) { return 'DB_CONNECTION=sqlite'; } return $line; }, file('.env')); file_put_contents('.env',join(PHP_EOL,$ct));"
+      
+    - name: Create SQLITE File
+      run: php -r "file_exists('database/database.sqlite') || file_put_contents('database/database.sqlite', '');"
+
+    - name: Migration & Seeding
+      run: php artisan migrate && php artisan db:seed
+
+   
     
-    - name: Migrate Database
-      run: php migrate.php
-
-    - name: Generate Fake Users
-      run: php seed.php 1000
-
-    - name: Testing Query User
-      run: php migrate.php true "SELECT * FROM user" && cat db.cache.json
