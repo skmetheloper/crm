@@ -19,7 +19,7 @@ jobs:
       run: composer run-script post-root-package-install
       
     - name: Change Database Driver
-      run: php -r "$ct=array_map(function ($line){ if (preg_match('/DB_CONNECTION=/', $line)) { return 'DB_CONNECTION=sqlite'; } return $line; }, file('.env')); file_put_contents('.env',join(PHP_EOL,$ct));"
+      run: php -r 'foreach(file(".env") as $line) $ct[]=preg_match("/DB_CONNECTION=/", $line)?"DB_CONNECTION=sqlite":$line; file_put_contents(".env",join(PHP_EOL,$ct));'
       
     - name: Create SQLITE File
       run: php -r "file_exists('database/database.sqlite') || file_put_contents('database/database.sqlite', '');"
