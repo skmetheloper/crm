@@ -23,7 +23,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Installation
-      run: composer validate && composer install --quiet --no-dev
+      run: composer validate && composer install --quiet
 
     - name: Envrionment
       run: composer run-script post-root-package-install && composer run-script post-create-project-cmd
