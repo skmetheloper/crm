@@ -12,18 +12,15 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Create SQLITE File
+      run: php -r "file_exists('database/database.sqlite') || file_put_contents('database/database.sqlite', '');"
+
     - name: Installation
       run: composer validate && composer install --no-dev
       
     - name: Envrionment
       run: composer run-script post-root-package-install
       
-    - name: Change Database Driver
-      run: php -r 'foreach(file(".env") as $line) $ct[]=preg_match("/DB_CONNECTION=/", $line)?"DB_CONNECTION=sqlite":$line; file_put_contents(".env",join(PHP_EOL,$ct));'
-      
-    - name: Create SQLITE File
-      run: php -r "file_exists('database/database.sqlite') || file_put_contents('database/database.sqlite', '');"
-
     - name: Migration & Seeding
       run: php artisan migrate && php artisan db:seed
 
