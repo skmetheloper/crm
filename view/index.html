@@ -20,11 +20,11 @@
                         class="mail icon"></i>Messages </a>
                 <div class="ui simple dropdown item">More <i class="dropdown
                         icon"></i>
-                    <div class="menu"><a class="item"><i class="edit icon"></i>Edit
-                            Profile</a><a class="item"><i
-                                class="globe icon"></i>Choose Language</a><a
-                            class="item"><i
-                                class="settings icon"></i>Account Settings</a></div>
+                    <div class="menu">
+                        <a class="item"><i class="edit icon"></i>Edit Profile</a>
+                        <a class="item"><i class="globe icon"></i>Choose Language</a>
+                        <a href="setting.html" class="item"><i class="settings icon"></i>Account Settings</a>
+                    </div>
                 </div>
                 <div class="right item">
                     <div class="ui input"><input type="text"
@@ -42,7 +42,20 @@
                 Archive Old Messages
            </div>
             <div class="content">
-                <p>Your inbox is getting full, would you like us to enable automatic archiving of old messages?</p>
+                <div class="ui cards">
+
+                    <template>
+                        <div class="card">
+                            <div class="content">
+                                <div class="header"></div>
+                                <div class="meta"></div>
+                                <div class="description"></div>
+                            </div>
+                        </div>
+                    </template>
+            
+                    <script src="./main.js"></script>
+                </div>
             </div>
             <div class="actions">
                 <div class="ui red basic cancel inverted button">
@@ -57,9 +70,9 @@
         </div>
     </div>
 
-    <button class="ui basic button" onclick="$('.ui.basic.modal').modal('show')">Show Modal</button>
+    <button class="ui basic button" onclick="$('.ui.basic.modal').modal('show')">Product</button>
         
-    <div class="ui cards">
+    <!-- <div class="ui cards">
 
         <template>
             <div class="card">
@@ -72,7 +85,7 @@
         </template>
 
         <script src="./main.js"></script>
-    </div>
+    </div> -->
 
 </body>
 

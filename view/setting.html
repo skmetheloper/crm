@@ -11,11 +11,6 @@
             src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="./dist/semantic.js" defer></script>
     </head>
-    <script>
-$('.ui.basic.button')
-    .ui.modal('show');
-</script>
-
     <body>
         <div class="ui attached stackable menu">
             <div class="ui container"><a class="item"><i class="home icon"></i>Home
@@ -24,11 +19,13 @@ $('.ui.basic.button')
                         class="mail icon"></i>Messages </a>
                 <div class="ui simple dropdown item">More <i class="dropdown
                         icon"></i>
-                    <div class="menu"><a class="item"><i class="edit icon"></i>Edit
-                            Profile</a><a class="item"><i
-                                class="globe icon"></i>Choose Language</a><a
-                            class="item"><i
-                                class="settings icon"></i>Account Settings</a></div>
+                    <div class="menu">
+                        <a class="item"><i class="edit icon"></i>Edit Profile</a>
+                        <a class="item"><i class="globe icon"></i>Choose
+                            Language</a>
+                        <a href="setting.html" class="item"><i class="settings
+                                icon"></i>Account Settings</a>
+                    </div>
                 </div>
                 <div class="right item">
                     <div class="ui input"><input type="text"
@@ -36,31 +33,66 @@ $('.ui.basic.button')
                 </div>
             </div>
         </div>
-        <button type="button" class="fa fa-plus" data-toggle="modal"
-            data-target="#myModal">Product</button>
-
-        <!-- Modal -->
-        <div class="modal fade" id="myModal" role="dialog">
-            <div class="modal-dialog">
-
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close"
-                            data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Modal Header</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>Some text in the modal.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default"
-                            data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-
-            </div>
+        <!-- container -->
+        <div class="ui top attached tabular menu">
+            <a class="active item" data-tab="first">Products</a>
+            <a class="item" data-tab="second">Second</a>
+            <a class="item" data-tab="third">Third</a>
+            <button class="ui left floated button" id="btn1">Add Custom Field</button>
         </div>
+        <div class="ui bottom attached active tab segment" data-tab="first">
+            <table class="ui celled table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Status</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>No Name Specified</td>
+                        <td>Unknown</td>
+                        <td class="negative">None</td>
+                    </tr>
+                    <tr class="positive">
+                        <td>Jimmy</td>
+                        <td><i class="icon checkmark"></i> Approved</td>
+                        <td>None</td>
+                    </tr>
+                    <tr>
+                        <td>Jamie</td>
+                        <td>Unknown</td>
+                        <td class="positive"><i class="icon close"></i> Requires
+                            call</td>
+                    </tr>
+                    <tr class="negative">
+                        <td>Jill</td>
+                        <td>Unknown</td>
+                        <td>None</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="ui bottom attached tab segment" data-tab="second">
+            Second
+        </div>
+        <div class="ui bottom attached tab segment" data-tab="third">
+            Third
+        </div>
+    </div>
+        <script>
+            $(document).ready(function()
+            {
+            $("button").click(function()
+                {
+            alert($("#w3s").attr("href"));
+                });
+            });
+        </script>
+        <script>
+                $('.menu .item').tab('data-tab');
+        </script>
     </body>
 
 
