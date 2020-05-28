@@ -14,9 +14,9 @@ class PhoneDetails extends Migration
     public function up()
     {
         Schema::create('phone_details', function (Blueprint $table) {
-            $table->id('ph_details_id');
+            $table->id();
             $table->text('number');
-            $table->integer('phone_type');
+            $table->integer('phone_type_id');
             $table->dateTime('updated_at');
             $table->dateTime('created_at');
         });

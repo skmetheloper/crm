@@ -14,9 +14,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             LabelSeeder::class,
             OwnerVisibilityGroupSeeder::class,
-            TeamSeeder::class
-        ]);
-        
-        factory(App\User::class, 1000)->create();
+            TeamSeeder::class,
+            UserSeeder::class
+        ]);        
     }
 }

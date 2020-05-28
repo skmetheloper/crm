@@ -14,13 +14,13 @@ class People extends Migration
     public function up()
     {
         Schema::create('people', function (Blueprint $table) {
-            $table->id('people_id');
+            $table->id('id');
             $table->integer('organization_id');
             $table->integer('label_id');
             $table->integer('phoneDetails_id');
             $table->integer('emailDetails_id');
             $table->integer('owner_id');
-            $table->integer('id');
+            $table->integer('user_id');
             $table->integer('activities_to_do');
             $table->integer('closed_deals');
             $table->integer('done_activities');

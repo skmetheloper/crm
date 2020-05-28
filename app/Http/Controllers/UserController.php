@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class UserController extends Controller
 {
@@ -14,7 +15,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+       $users = User::all();
+
+        return $users;
     }
 
     /**
@@ -41,12 +44,22 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\User  $user
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(int $id)
     {
-        //
+        $user = User::get()->where('id', '=', $id);
+        $user = $user->merge($user)->first();
+
+        if (!isset($user)) {
+
+            return new Response([
+                'error'=>'Unexisted user id'
+            ], 404);
+        }
+
+        return new Response($user, 200);
     }
 
     /**

@@ -14,9 +14,9 @@ class EmailDetails extends Migration
     public function up()
     {
         Schema::create('email_details', function (Blueprint $table) {
-            $table->id('email_details_id');
+            $table->id();
             $table->text('email');
-            $table->text('email_type_id');
+            $table->integer('email_type_id');
             $table->dateTime('updated_at');
             $table->dateTime('created_at');
         });

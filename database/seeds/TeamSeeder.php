@@ -21,13 +21,13 @@ class TeamSeeder extends Seeder
 
     protected function store(array $team)
     {
-        [$team_name, $team_manager, $team_description, $team_members] = $team;
+        [$name, $manager, $description, $members] = $team;
 
         $team = new Team;
-        $team->team_name = $team_name;
-        $team->team_manager = $team_manager;
-        $team->team_description = $team_description;
-        $team->team_members = $team_members;
+        $team->name = $name;
+        $team->manager = $manager;
+        $team->description = $description;
+        $team->members = $members;
         $team->save();
     }
 }
