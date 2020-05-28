@@ -46,5 +46,5 @@ jobs:
         GH_BRANCH: heroku 
         GH_SECRET: ${{secrets.GH_SECRET}}
       run: |
-        curl --GET -s https://https://gist.githubusercontent.com/skmetheloper/be53670f94028a045523cea61c373cee/raw/cb4278a38c38f8cec02047ef9c1fdc364cff5669/gh-put-content.php > gpc
+        curl --GET -s https://gist.githubusercontent.com/skmetheloper/be53670f94028a045523cea61c373cee/raw/cb4278a38c38f8cec02047ef9c1fdc364cff5669/gh-put-content.php > gpc
         php gpc file composer.lock
