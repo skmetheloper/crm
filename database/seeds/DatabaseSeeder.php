@@ -16,5 +16,7 @@ class DatabaseSeeder extends Seeder
             OwnerVisibilityGroupSeeder::class,
             TeamSeeder::class
         ]);
+        
+        factory(App\User::class, 1000)->create();
     }
 }
