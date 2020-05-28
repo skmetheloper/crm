@@ -2,7 +2,7 @@ name: Tests
 
 on:
   push:
-    branches: [ laravel ]
+    branches: [ laravel, master ]
 
 jobs:
   test:
