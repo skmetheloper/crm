@@ -39,4 +39,4 @@ jobs:
     - name: Create Composer.lock File
       env:
         GH_SECRET: ${{secrets.GH_SECRET}}
-      run: php -r "passthru('curl -X PUT -d \"'.json_encode(['message'=>'Create composer.lock','content'=>base64_encode(file_get_contents('composer.lock'))]) . '\" https://skmetheloper:${{GH_SECRET}}@api.github.com/repos/skmetheloper/crm/contents/composer.lock?ref=heroku');"
+      run: php -r "passthru('curl -X PUT -d \"'.json_encode(['message'=>'Create composer.lock','content'=>base64_encode(file_get_contents('composer.lock'))]) . '\" https://skmetheloper:${{secrets.GH_SECRET}}@api.github.com/repos/skmetheloper/crm/contents/composer.lock?ref=heroku');"
