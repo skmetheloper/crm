@@ -2,8 +2,8 @@
 
 namespace Tests\Unit;
 
-use Illuminate\Support\Facade\DB;
 use PHPUnit\Framework\TestCase;
+use Illuminate\Support\Facades\DB;
 
 class UserQueryTest extends TestCase
 {
