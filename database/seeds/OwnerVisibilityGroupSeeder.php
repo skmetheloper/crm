@@ -27,6 +27,6 @@ class OwnerVisibilityGroupSeeder extends Seeder
     {
         $current = now();
         $bindings = array_merge($owner_visibility_group, [$current, $current]);
-        DB::insert('INSERT INTO owner_visibility_group (owner_visibility_name, description, updated_at, created_at) VALUES (?, ?, ?, ?)', $bindings);
+        DB::insert('INSERT INTO owner_visibility_groups (name, description, updated_at, created_at) VALUES (?, ?, ?, ?)', $bindings);
     }
 }

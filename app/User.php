@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
 {
-    protected $table = 'user';
+    protected $table = 'users';
 
     protected $fillable = [
         'email',
@@ -19,6 +19,6 @@ class User extends Model
     ];
 
     protected $guarded = [
-        'user_id'
+        'id'
     ];
 }

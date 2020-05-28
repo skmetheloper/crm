@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Label extends Model
 {
-    protected $table = 'label';
+    protected $table = 'labels';
 
     protected $fillable = [
-        'label_name'
+        'name'
     ];
 
     protected $guarded = [
-        'label_id'
+        'id'
     ];
 }

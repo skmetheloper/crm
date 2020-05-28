@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Organization extends Model
 {
-    protected $table = 'organization';
+    protected $table = 'organizations';
 
     protected $fillable = [
-        'organization_name',
-        'organization_address',
+        'name',
+        'address',
         'label_id',
         'owner_id',
         'activities_to_do',
@@ -20,7 +20,7 @@ class Organization extends Model
         'lost_deals',
         'next_activity_date',
         'open_deals',
-        'organization_created_at',
+        'created_at',
         'total_activities',
         'update_time',
         'won_deals',
@@ -28,6 +28,6 @@ class Organization extends Model
     ];
 
     protected $guaded = [
-        'organization_id'
+        'id'
     ];
 }

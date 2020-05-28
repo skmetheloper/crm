@@ -22,10 +22,10 @@ class LabelSeeder extends Seeder
         array_map([$this, 'store'], $this->prefix_data);
     }
 
-    protected function store(string $label_name)
+    protected function store(string $name)
     {
         $label = new Label;
-        $label->label_name = $label_name;
+        $label->name = $name;
         $label->save();
     }
 }
