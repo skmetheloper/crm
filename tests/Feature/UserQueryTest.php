@@ -9,14 +9,12 @@ class UserQueryTest extends TestCase
 {
   public function testGetAll()
   {
+    $app = $this->createApplication();
     $users = DB::table('user')->get();
-    
-    $result = json_encode($users, JSON_PRETTY_PRINT);
-    
+    $result = json_encode($users, JSON_PRETTY_PRINT);  
     register_shutdown_function(function () use ($result) {
         echo PHP_EOL, $result, PHP_EOL;
     });
-
     $this->assertTrue(true);
   }
 }
