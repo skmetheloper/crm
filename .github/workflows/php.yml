@@ -33,6 +33,6 @@ jobs:
     
     - name: Seeding
       run: php artisan db:seed
-  
-    - name: Fake Users Factory
-      run: php -r 'require("vendor/autoload.php");factory(App\User::class, 1000)->create();exit(1);';
+    
+    - name: PHPUnit Test
+      run: vendor/bin/phpunit
