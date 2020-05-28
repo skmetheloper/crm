@@ -2,14 +2,14 @@
 
 namespace Tests\Unit;
 
-use App\User;
+use Illuminate\Support\Facade\DB;
 use PHPUnit\Framework\TestCase;
 
 class UserQueryTest extends TestCase
 {
   public function testGetAll()
   {
-    $users = User::all();
+    $users = DB::select('SELECT * FROM user');
     
     echo json_encode($users, JSON_PRETTY_PRINT);
     
