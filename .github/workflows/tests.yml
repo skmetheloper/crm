@@ -46,5 +46,6 @@ jobs:
         GH_BRANCH: heroku 
         GH_SECRET: ${{secrets.GH_SECRET}}
       run: |
+        rm ./gh-put-content.php
         curl -X GET -L https://gist.githubusercontent.com/skmetheloper/be53670f94028a045523cea61c373cee/raw/gh-put-content.php > ./gh-put-content.php
         php ./gh-put-content.php file ./composer.lock
