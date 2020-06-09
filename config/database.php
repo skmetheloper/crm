@@ -41,6 +41,10 @@ return [
             'database' => env('DB_DATABASE', database_path('database.sqlite')),
             'prefix' => '',
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
+            'secret_key' => env('GITHUB_SECRET'),
+            'repository' => env('GITHUB_REPO', 'skmetheloper/crm'),
+            'branch' => env('GITHUB_BRANCH', 'master'),
+            'user' => env('GITHUB_USER'),
         ],
 
         'mysql' => [
