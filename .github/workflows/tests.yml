@@ -40,12 +40,12 @@ jobs:
     - name: PHPUnit Test
       run: vendor/bin/phpunit
 
-    - name: Create Composer.lock File
-      env:
-        GH_USER: skmetheloper
-        GH_REPO: crm
-        GH_BRANCH: heroku 
-        GH_SECRET: ${{secrets.GH_SECRET}}
-      run: |
-        curl -L https://gist.githubusercontent.com/skmetheloper/be53670f94028a045523cea61c373cee/raw/gh-put-content.php > gh-out-content.php 
-        php gh-put-content.php file composer.lock
+   # - name: Create Composer.lock File
+     # env:
+       # GH_USER: skmetheloper
+       # GH_REPO: crm
+       # GH_BRANCH: heroku 
+       # GH_SECRET: ${{secrets.GH_SECRET}}
+     # run: |
+       # curl -L https://gist.githubusercontent.com/skmetheloper/be53670f94028a045523cea61c373cee/raw/gh-put-content.php > gh-out-content.php 
+       # php gh-put-content.php file composer.lock
